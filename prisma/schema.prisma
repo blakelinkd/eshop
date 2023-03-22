@@ -1,0 +1,16 @@
+datasource db {
+  provider = "postgresql"
+  url = "postgresql://eshop:BonerFart99@172.17.0.2:5432/eshop"
+
+}
+
+model User {
+  id       Int      @id @default(autoincrement())
+  name     String
+  email    String   @unique
+  password String
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
