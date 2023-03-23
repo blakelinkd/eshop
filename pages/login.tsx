@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  
   const router = useRouter()
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -30,19 +31,19 @@ export default function LoginPage() {
   }
 
   return (
-    <form  className="blur-background" onSubmit={handleSubmit}>
-      <label>
+    <form  className="blur-background login-form" onSubmit={handleSubmit}>
+      <label className="form-label">
         Email:
-        <input
+        <input className="form-input"
           type="email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
       </label>
       <br />
-      <label>
+      <label className="form-label">
         Password:
-        <input
+        <input className="form-input"
           type="password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}

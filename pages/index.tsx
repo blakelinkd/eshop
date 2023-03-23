@@ -10,6 +10,11 @@ export default function Home() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [username, setUsername] = useState('')
+  const [isHidden, setIsHidden] = useState<boolean>(true);
+
+  function toggleVisibility() {
+    setIsHidden(!isHidden)
+  }
 
   function handleLogout() {
     setIsLoggedIn(false)
@@ -57,19 +62,19 @@ export default function Home() {
               </li>
               {isLoggedIn ? (
                 <li>
-                  <Link href="/signout">
+                  <Link href="#signout" onClick={toggleVisibility}>
                     <span className="px-4 py-2 hover:text-gray-200">Signout</span>
                   </Link>
                 </li>
               ) : (
                 <>
                   <li>
-                    <Link href="/login">
+                    <Link href="#login" onClick={toggleVisibility}>
                       <span className="px-4 py-2 hover:text-gray-200">Login</span>
                     </Link>
                   </li>
                   <li>
-                    <Link href="/signup">
+                    <Link href="#signup" onClick={toggleVisibility}>
                       <span className="px-4 py-2 hover:text-gray-200">SignUp</span>
                     </Link>
                   </li>
@@ -91,11 +96,10 @@ export default function Home() {
             ) : (
               <>
                 <Link href="/login">
-                  <span>Login</span>
                 </Link>
-                <LoginPage />
-
-                <SignUpPage />
+                {isHidden ? "" :<LoginPage/>}
+                {isHidden ? "" :<SignUpPage />}
+                
               </>
 
             )}

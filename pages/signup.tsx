@@ -36,10 +36,10 @@ interface SignUpData {
     }
   
     return (
-      <form className="blur-background" onSubmit={handleSubmit}>
-        <label>
+      <form className="blur-background login-form" onSubmit={handleSubmit}>
+        <label className="form-label">
           Name:
-          <input
+          <input className="form-input"
             type="text"
             value={signUpData.name}
             onChange={(event) =>
@@ -48,9 +48,9 @@ interface SignUpData {
           />
         </label>
         <br />
-        <label>
+        <label className="form-label">
           Email:
-          <input
+          <input className="form-input"
             type="email"
             value={signUpData.email}
             onChange={(event) =>
@@ -59,9 +59,9 @@ interface SignUpData {
           />
         </label>
         <br />
-        <label>
+        <label className="form-label">
           Password:
-          <input
+          <input className="form-input"
             type="password"
             value={signUpData.password}
             onChange={(event) =>
