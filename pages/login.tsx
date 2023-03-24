@@ -34,7 +34,7 @@ export default function LoginPage() {
     <form  className="blur-background login-form" onSubmit={handleSubmit}>
       <label className="form-label">
         Email:
-        <input className="form-input"
+        <input data-testid="email-input" className="form-input"
           type="email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
@@ -43,14 +43,14 @@ export default function LoginPage() {
       <br />
       <label className="form-label">
         Password:
-        <input className="form-input"
+        <input data-testid="password-input" className="form-input"
           type="password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
       </label>
       <br />
-      <button type="submit">Log in</button>
+      <button id="login-button" type="submit">Log in</button>
     </form>
   )
 }

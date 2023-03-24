@@ -5,8 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "next dev",
+    "lint": "next lint",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "dependencies": {
     "@prisma/client": "^4.11.0",
@@ -30,9 +32,13 @@
     "typescript": "5.0.2"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/bcryptjs": "^2.4.2",
+    "bcrypt": "^5.1.0",
+    "cypress": "^12.8.1",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-preset-env": "^8.0.1",
+    "start-server-and-test": "^2.0.0",
     "tailwindcss": "^3.2.7"
   }
 }

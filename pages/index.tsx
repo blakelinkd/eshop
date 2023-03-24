@@ -69,9 +69,9 @@ export default function Home() {
               ) : (
                 <>
                   <li>
-                    <Link href="#login" onClick={toggleVisibility}>
-                      <span className="px-4 py-2 hover:text-gray-200">Login</span>
-                    </Link>
+                  <Link id="login-link" href="#login" onClick={toggleVisibility}>
+  <span id="login-link" className="px-4 py-2 hover:text-gray-200">Login</span>
+</Link>
                   </li>
                   <li>
                     <Link href="#signup" onClick={toggleVisibility}>
@@ -90,7 +90,7 @@ export default function Home() {
           <div className="text-center text-white">
             {isLoggedIn ? (
               <>
-              <p>Welcome, user who is logged in.</p>
+              <p id="user-display-message">Welcome, user who is logged in.</p>
               <SignoutPage />
               </>
             ) : (

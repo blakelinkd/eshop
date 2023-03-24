@@ -18,7 +18,7 @@ export default function SignoutPage() {
       <h1>Are you sure you want to sign out?</h1>
     </div>
     <form onSubmit={handleSignout}>
-      <button>Sign out</button>
+      <button id="#signout-button">Sign out</button>
     </form>
     </>
   )
