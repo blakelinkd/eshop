@@ -11,8 +11,29 @@ export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [username, setUsername] = useState('')
   const [isHidden, setIsHidden] = useState<boolean>(true);
-
-  function toggleVisibility() {
+  const [hideSignup, setHideSignup] = useState<boolean>(true)
+  const [hideLogin, setHideLogin] = useState<boolean>(true)
+  const [hideSignout, setHideSignout] = useState<boolean>(true)
+  
+  function toggleVisibility(e: any) {
+    console.log(e.target)
+    console.log(e.target.id)
+    if(e.target.id === "login-link") {
+      setHideSignup(true)
+      setHideSignout(true)
+      setHideLogin(false)
+    }
+    if(e.target.id === "signup-link") {
+      setHideLogin(true)
+      setHideSignout(true)
+      setHideSignup(false)
+    }
+    if(e.target.id === "signout-link") {
+      setHideLogin(true)
+      setHideSignout(false)
+      setHideSignup(true)
+    }
+    
     setIsHidden(!isHidden)
   }
 
@@ -38,8 +59,6 @@ export default function Home() {
         .then((data) => setUsername(data.username));
     }
   }, []);
-  console.log('logged in?: ' + isLoggedIn)
-  console.log(username)
 
   return (
     <div>
@@ -62,8 +81,8 @@ export default function Home() {
               </li>
               {isLoggedIn ? (
                 <li>
-                  <Link href="#signout" onClick={toggleVisibility}>
-                    <span className="px-4 py-2 hover:text-gray-200">Signout</span>
+                  <Link id="signout-link" href="#signout" onClick={toggleVisibility}>
+                    <span id="signout-link" className="px-4 py-2 hover:text-gray-200">Signout</span>
                   </Link>
                 </li>
               ) : (
@@ -74,8 +93,8 @@ export default function Home() {
 </Link>
                   </li>
                   <li>
-                    <Link href="#signup" onClick={toggleVisibility}>
-                      <span className="px-4 py-2 hover:text-gray-200">SignUp</span>
+                    <Link id="signup-link" href="#signup" onClick={toggleVisibility}>
+                      <span id="signup-link" className="px-4 py-2 hover:text-gray-200">SignUp</span>
                     </Link>
                   </li>
                 </>
@@ -91,14 +110,14 @@ export default function Home() {
             {isLoggedIn ? (
               <>
               <p id="user-display-message">Welcome, user who is logged in.</p>
-              <SignoutPage />
+              {hideSignout ? "" : <SignoutPage /> }
               </>
             ) : (
               <>
                 <Link href="/login">
                 </Link>
-                {isHidden ? "" :<LoginPage/>}
-                {isHidden ? "" :<SignUpPage />}
+                {hideLogin ? "" :<LoginPage/>}
+                {hideSignup ? "" :<SignUpPage />}
                 
               </>
 

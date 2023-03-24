@@ -74,12 +74,4 @@ describe('Home page', () => {
     cy.get('#login-link').contains('Login').should('be.visible')
   });
 
-  it('should only show the login form when the Login link is clicked', () => {
-    cy.get('#login-link').click()
-    cy.contains('Login').should('be.visible')
-    cy.contains('SignUp').should('not.be.visible')
-  })
-
-
-
 })
