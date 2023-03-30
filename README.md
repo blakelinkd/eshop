@@ -41,7 +41,16 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 # Notes and todo type stuff.
 
-Use HTTPS for secure communication: Make sure your application is using HTTPS to encrypt data transmitted between the client and the server. This will help protect the user's credentials during transmission.
+1. Use HTTPS for secure communication: Make sure your application is using HTTPS to encrypt data transmitted between the client and the server. This will help protect the user's credentials during transmission.
+
+- todo:
+how do I use https in my dev environment?
+
+
+
+
+
+
 
 Rate-limiting: Consider implementing rate-limiting to prevent brute force attacks on user accounts. This can be done using a middleware or an external package like "express-rate-limit" if you were using Express.js.
 
@@ -66,3 +75,34 @@ setCookie({ res }, 'authToken', user.id.toString(), {
   secure: process.env.NODE_ENV === 'production',
 })
 With these improvements in place, your authentication implementation will be more robust and secure.
+
+
+# DOCKER NOTES
+
+| Code Sample | Chapter 8 Concept | Explanation |
+|-------------|------------------|-------------|
+| `FROM python:3.9-slim-buster` | Base Images | This code sample specifies the base image for a Docker image, which is used as the starting point for building the image. Chapter 8 covers the importance of selecting a minimal and secure base image to reduce the size and attack surface of the image. |
+| `RUN apt-get update && apt-get install -y python3-dev gcc` | Layering | This code sample installs Python development tools and gcc in a Docker image. Each `RUN` command creates a new layer in the image, and Chapter 8 covers the best practices for minimizing the number of layers in an image to reduce the build time and disk usage. |
+| `EXPOSE 8080` | Networking | This code sample exposes port 8080 in a Docker image, which allows other containers to connect to it. Chapter 8 covers the different networking options in Docker and how to configure container networking to enable communication between containers. |
+| `CMD ["python3", "app.py"]` | Containerization | This code sample specifies the command to run when a Docker container starts. Chapter 8 covers the process of creating a Docker container from an image and how to customize the container's behavior using environment variables, volume mounts, and other configuration options. |
+| `docker build -t myapp:1.0 .` | Building Images | This code sample shows the command to build a Docker image from a Dockerfile. Chapter 8 covers the steps involved in building a Docker image, including creating a Dockerfile, specifying the build context, and running the `docker build` command to build the image. |
+
+
+# Chapter 2
+| Code Sample | Concept | Explanation |
+|-------------|---------|-------------|
+| `docker run hello-world` | Running Containers | This code sample runs a Docker container that outputs a simple "Hello, World!" message. This is often used as a first step to verify that Docker is installed and running correctly on a system. |
+| `docker ps` | Container Management | This code sample lists the running Docker containers on a system. Chapter 2 of "Docker Deep Dive" covers container management concepts, such as creating, starting, stopping, and removing containers. |
+| `docker images` | Image Management | This code sample lists the Docker images on a system. Chapter 2 also covers image management concepts, such as creating, tagging, and pushing/pulling images to/from a registry. |
+| `docker exec -it CONTAINER_ID bash` | Container Shell | This code sample starts an interactive shell session inside a running Docker container. Chapter 3 of "Docker Deep Dive" covers how to manage containers and access their shells. |
+| `docker stop CONTAINER_ID` | Stopping Containers | This code sample stops a running Docker container. Chapter 2 covers container management concepts, such as starting, stopping, and removing containers. |
+| `docker rm CONTAINER_ID` | Removing Containers | This code sample removes a stopped Docker container. Chapter 2 also covers container management concepts, such as creating, starting, stopping, and removing containers. |
+| `docker rmi IMAGE_ID` | Removing Images | This code sample removes a Docker image from a system. Chapter 2 also covers image management concepts, such as creating, tagging, and pushing/pulling images to/from a registry. |
+| `docker build -t myapp:1.0 .` | Building Images | This code sample builds a Docker image from a Dockerfile. Chapter 8 of "Docker Deep Dive" covers the steps involved in building a Docker image, including creating a Dockerfile, specifying the build context, and running the `docker build` command to build the image. |
+| `docker-compose up -d` | Docker Compose | This code sample starts a multi-container Docker application defined in a Docker Compose file. Chapter 12 of "Docker Deep Dive" covers Docker Compose concepts, such as defining services, networks, volumes, and environment variables. |
+| `docker inspect CONTAINER_ID` | Container Inspection | This code sample inspects the configuration of a running Docker container, including its network settings, environment variables, and mounted volumes. Chapter 3 covers how to inspect containers using various Docker commands. |
+| `docker logs CONTAINER_ID` | Container Logging | This code sample displays the log output of a running Docker container. Chapter 3 also covers container logging concepts, such as viewing container logs, configuring logging drivers, and setting log levels. |
+| `docker network ls` | Network Management | This code sample lists the Docker networks on a system. Chapter 6 of "Docker Deep Dive" covers network management concepts, such as creating, connecting, and disconnecting containers from networks. |
+| `docker volume create myvol` | Volume Management | This code sample creates a Docker volume that can be used to persist data across container instances. Chapter 7 of "Docker Deep Dive" covers volume management concepts, such as creating, inspecting, and removing volumes. |
+| `docker cp FILE.txt CONTAINER_ID:/path/to/destination` | File Transfer | This code sample copies a file from the host system to a running Docker container. Chapter 3 covers file transfer concepts, such as copying files to/from a container and mounting host directories as volumes in containers. |
+|

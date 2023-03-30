@@ -19,11 +19,6 @@ describe('Home page', () => {
 
     // Check if the user's name or other identifying element is visible on the page
     cy.get('#user-display-message', { timeout: 5000 }).should('contain', 'Welcome, user who is logged in.'); // Replace 'Test User' with the expected display name
-
-    it('should display the signout link when user is logged in', () => {
-      cy.get('#signout-button').contains('Sign out').should('be.visible');
-    });
-
   });
 
   it('should display the correct page title', () => {
@@ -58,8 +53,6 @@ describe('Home page', () => {
     cy.get('span').contains('SignUp').should('be.visible');
   });
 
-
-
   it('should display the login page when login link is clicked', () => {
     cy.get('span').contains('Login').click();
     cy.get('form').should('be.visible');
@@ -71,7 +64,6 @@ describe('Home page', () => {
   });
 
   it('should display the Login link when signout link is clicked', () => {
-    cy.get('#login-link').contains('Login').should('be.visible')
+    cy.get('#login-link').contains('Login').should('be.visible');
   });
-
-})
+});

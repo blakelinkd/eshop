@@ -6,6 +6,7 @@ import LoginPage from './login'
 import SignoutPage from './signout'
 import SignUpPage from './signup';
 import { destroyCookie } from 'nookies';
+import ProductsPage from './products';
 export default function Home() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -14,6 +15,7 @@ export default function Home() {
   const [hideSignup, setHideSignup] = useState<boolean>(true)
   const [hideLogin, setHideLogin] = useState<boolean>(true)
   const [hideSignout, setHideSignout] = useState<boolean>(true)
+  const [hideProducts, setHideProducts] = useState<boolean>(true)
   
   function toggleVisibility(e: any) {
     console.log(e.target)
@@ -22,16 +24,28 @@ export default function Home() {
       setHideSignup(true)
       setHideSignout(true)
       setHideLogin(false)
+      setHideProducts(true)
+
     }
     if(e.target.id === "signup-link") {
       setHideLogin(true)
       setHideSignout(true)
       setHideSignup(false)
+      setHideProducts(true)
+
     }
     if(e.target.id === "signout-link") {
       setHideLogin(true)
       setHideSignout(false)
       setHideSignup(true)
+      setHideProducts(true)
+
+    }
+    if(e.target.id === "products-link") {
+      setHideLogin(true)
+      setHideSignout(true)
+      setHideSignup(true)
+      setHideProducts(false)
     }
     
     setIsHidden(!isHidden)
@@ -79,6 +93,11 @@ export default function Home() {
 
                 </Link>
               </li>
+              <li>
+                  <Link id="products-link" href="#signout" onClick={toggleVisibility}>
+                    <span id="products-link" className="px-4 py-2 hover:text-gray-200">Products</span>
+                  </Link>
+                </li>
               {isLoggedIn ? (
                 <li>
                   <Link id="signout-link" href="#signout" onClick={toggleVisibility}>
@@ -118,6 +137,7 @@ export default function Home() {
                 </Link>
                 {hideLogin ? "" :<LoginPage/>}
                 {hideSignup ? "" :<SignUpPage />}
+                {hideProducts ? "" :<ProductsPage />}
                 
               </>
 
