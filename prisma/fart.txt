@@ -1,0 +1,55 @@
+// custom_seed.ts
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+async function main() {
+  // Your custom seed logic here
+  const user1 = await prisma.user.create({
+    data: {
+      name: "Alice",
+      email: "alice@example.com",
+    },
+  });
+
+  console.log("Created user:", user1);
+}
+
+main()
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
+
+I want this code to seed the database with 1000 unique realistic looking tables.// custom_seed.ts
+import { PrismaClient } from "@prisma/client";
+// custom_seed.ts
+import { PrismaClient } from "@prisma/client";
+import faker from "faker";
+
+const prisma = new PrismaClient();
+
+async function main() {
+  // Create 1000 unique, realistic-looking users
+  for (let i = 0; i < 1000; i++) {
+    const user = await prisma.user.create({
+      data: {
+        name: `${faker.name.firstName()} ${faker.name.lastName()}`,
+        email: faker.internet.email(),
+      },
+    });
+    console.log(`Created user ${i + 1}:`, user);
+  }
+}
+
+main()
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
