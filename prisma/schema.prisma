@@ -3,13 +3,59 @@ datasource db {
   url      = "postgresql://eshop:BonerFart99@172.17.0.2:5432/eshop"
 }
 
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id  String @id @default(cuid())
+  sessionToken String @unique
+  userId String
+  expires DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
 model User {
-  id       Int    @id @default(autoincrement())
+  id       String @id @default(cuid())
   name     String
   email    String @unique
+  emailVerified Boolean @default(false)
+  image   String?
+  accounts  Account[]
+  sessions  Session[]
   password String
   carts    Cart[]
   posts    Post[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model EmailVerification {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  token     String   @unique
+  createdAt DateTime @default(now())
 }
 
 model Post {
@@ -18,13 +64,13 @@ model Post {
   content   String
   published Boolean @default(false)
   user      User    @relation(fields: [userId], references: [id])
-  userId    Int
+  userId    String
 }
 
 model Cart {
   id     Int        @id @default(autoincrement())
   user   User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId Int
+  userId String
   items  CartItem[]
 }
 

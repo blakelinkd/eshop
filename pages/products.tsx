@@ -1,7 +1,8 @@
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
+import ProductCard from '../components/ProductCard';
 
-interface Product {
+export interface Product {
   id: number;
   name: string;
   price: number;
@@ -28,21 +29,9 @@ export default function ProductsPage() {
         <meta name="description" content="Welcome to my products page!" />
       </Head>
       <h1 className="text-3xl font-bold mb-8">Products</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8" style={{ height: "fit-content" }}>
         {products.map((product) => (
-          <div
-            key={product.id}
-            className="bg-white shadow rounded p-6"
-          >
-            <img
-              src={`https://source.unsplash.com/featured/?${product.name}`}
-              alt={product.name}
-              className="w-full mb-4"
-            />
-            <h3 className="text-xl font-bold mb-2">{product.name}</h3>
-            <p className="text-gray-600">{product.description}</p>
-            <p className="text-gray-600">${product.price}</p>
-          </div>
+          <ProductCard key={product.id} product={product} />
         ))}
       </div>
     </div>

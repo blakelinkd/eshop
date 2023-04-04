@@ -1,8 +1,22 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcryptjs'
+import crypto from 'crypto'
+import NodemailerProvider from '../../nodemailer.provider';
 
+import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
+
+const emailProvider = NodemailerProvider({
+  host: process.env.SES_HOST,
+  port: process.env.SES_PORT,
+  auth: {
+    user: process.env.SES_USER,
+    pass: process.env.SES_PASSWORD,
+  },
+  from: process.env.EMAIL_FROM,
+});
+
+
 
 const handleSignUp = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'POST') {
@@ -38,7 +52,38 @@ const handleSignUp = async (req: NextApiRequest, res: NextApiResponse) => {
       password: hashedPassword,
     },
   })
+  const token = crypto.randomBytes(32).toString('hex');
 
+  // Save the token in the database
+  const oneWeekFromNow = new Date()
+  oneWeekFromNow.setDate(oneWeekFromNow.getDate() + 7)
+  await prisma.verificationToken.create({
+    data: {
+      identifier: email,
+      token,
+      expires: oneWeekFromNow,
+    },
+  });
+
+  await prisma.emailVerification.create({
+    data: {
+      email: email,
+      token,
+    },
+  });
+
+  // Send a verification email
+  const verificationLink = `http://${req.headers.host}/api/auth/verify-email?token=${token}`;
+
+  await emailProvider.sendVerificationRequest({
+    identifier: email,
+    url: verificationLink,
+    token,
+    baseUrl: `http://${req.headers.host}`,
+    provider: emailProvider,
+  });
+  
+  console.log(emailProvider)
   res.status(201).json({ userId: newUser.id })
 }
 

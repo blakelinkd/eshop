@@ -7,8 +7,11 @@ import SignoutPage from './signout'
 import SignUpPage from './signup';
 import { destroyCookie } from 'nookies';
 import ProductsPage from './products';
+import {useSession, signIn, signOut} from 'next-auth/react';
 export default function Home() {
 
+  const {data: session} = useSession()
+  console.log(session)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [username, setUsername] = useState('')
   const [isHidden, setIsHidden] = useState<boolean>(true);
@@ -94,7 +97,7 @@ export default function Home() {
                 </Link>
               </li>
               <li>
-                  <Link id="products-link" href="#signout" onClick={toggleVisibility}>
+                  <Link id="products-link" href="#products" onClick={toggleVisibility}>
                     <span id="products-link" className="px-4 py-2 hover:text-gray-200">Products</span>
                   </Link>
                 </li>
@@ -126,6 +129,7 @@ export default function Home() {
       <section className="bg-cover bg-center h-screen" style={{ backgroundImage: 'url("https://source.unsplash.com/random")' }}>
         <div className="flex items-center justify-center h-full w-full bg-gray-900bg-opacity-50">
           <div className="text-center text-white">
+            { session ? "Hello Blake" : "" }
             {isLoggedIn ? (
               <>
               <p id="user-display-message">Welcome, user who is logged in.</p>
@@ -151,55 +155,12 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="container mx-auto px-6 py-8">
-        <h2 className="text-3xl font-bold mb-8">Popular Items</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="bg-white shadow rounded p-6">
-            <img
-              src="https://source.unsplash.com/random/200x200"
-              alt="Product Image"
-              className="w-full mb-4"
-            />
-            <h3 className="text-xl font-bold mb-2">Product 1</h3>
-            <p className="text-gray-600">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </p>
-          </div>
-          <div className="bg-white shadow rounded p-6">
-            <img
-              src="https://source.unsplash.com/random/200x201"
-              alt="Product Image"
-              className="w-full mb-4"
-            />
-            <h3 className="text-xl font-bold mb-2">Product 2</h3>
-            <p className="text-gray-600">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </p>
-          </div>
-          <div className="bg-white shadow rounded p-6">
-            <img
-              src="https://source.unsplash.com/random/200x202"
-              alt="Product Image"
-              className="w-full mb-4"
-            />
-            <h3 className="text-xl font-bold mb-2">Product 3</h3>
-            <p className="text-gray-600">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </p>
-          </div>
-          <div className="bg-white shadow rounded p-6">
-            <img
-              src="https://source.unsplash.com/random/200x203"
-              alt="Product Image"
-              className="w-full mb-4"
-            />
-            <h3 className="text-xl font-bold mb-2">Product 4</h3>
-            <p className="text-gray-600">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </p>
-          </div>
-        </div>
-      </section>
+      <section id="popular-items" className="mx-auto px-6 py-8">
+  <h2 className="text-3xl font-bold mb-8">Popular Items</h2>
+  
+  <ProductsPage></ProductsPage>
+</section>
+
       <section className="bg-gray-800 py-8">
         <div className="container mx-auto px-6">
           <h2 className="text-4xl font-bold text-center text-white mb-8">

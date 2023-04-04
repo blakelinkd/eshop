@@ -1,0 +1,104 @@
+I want this code:
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="bg-white shadow rounded p-6">
+            <img
+              src="https://source.unsplash.com/random/200x200"
+              alt="Product Image"
+              className="w-full mb-4"
+            />
+            <h3 className="text-xl font-bold mb-2">Product 1</h3>
+            <p className="text-gray-600">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+          </div>
+          <div className="bg-white shadow rounded p-6">
+            <img
+              src="https://source.unsplash.com/random/200x201"
+              alt="Product Image"
+              className="w-full mb-4"
+            />
+            <h3 className="text-xl font-bold mb-2">Product 2</h3>
+            <p className="text-gray-600">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+          </div>
+          <div className="bg-white shadow rounded p-6">
+            <img
+              src="https://source.unsplash.com/random/200x202"
+              alt="Product Image"
+              className="w-full mb-4"
+            />
+            <h3 className="text-xl font-bold mb-2">Product 3</h3>
+            <p className="text-gray-600">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+          </div>
+          <div className="bg-white shadow rounded p-6">
+            <img
+              src="https://source.unsplash.com/random/200x203"
+              alt="Product Image"
+              className="w-full mb-4"
+            />
+            <h3 className="text-xl font-bold mb-2">Product 4</h3>
+            <p className="text-gray-600">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+          </div>
+        </div>
+
+to use this api:
+import { PrismaClient, Product } from '@prisma/client';
+import { NextApiRequest, NextApiResponse } from 'next';
+
+const prisma = new PrismaClient();
+
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<{ data: Product[]; meta: Meta }>
+) {
+  const page = parseInt(req.query.page as string) || 1;
+  const pageSize = parseInt(req.query.pageSize as string) || 10;
+
+  const totalCount = await prisma.product.count();
+  const totalPages = Math.ceil(totalCount / pageSize);
+
+  const { name } = req.query;
+
+  let products: Product[];
+
+  if (name) {
+    products = await prisma.product.findMany({
+      where: {
+        name: {
+          contains: name.toString(),
+          mode: "insensitive"
+        }
+      },
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+    });
+  } else {
+    products = await prisma.product.findMany({
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+    });
+  }
+
+  res.status(200).json({
+    data: products,
+    meta: {
+      page,
+      pageSize,
+      totalPages,
+      totalCount,
+    },
+  });
+}
+
+interface Meta {
+  page: number;
+  pageSize: number;
+  totalPages: number;
+  totalCount: number;
+}
+to get the products name, image and ID.
