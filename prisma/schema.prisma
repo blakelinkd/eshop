@@ -85,7 +85,8 @@ model CartItem {
 model Product {
   id          Int     @id @default(autoincrement())
   name        String
-  price       String
+  price     Decimal @db.Decimal(8, 2) // 8 digits of precision, 2 digits of scale
+
   description String?
   image       String?
 }

@@ -1,14 +1,16 @@
-// Import CSS and NextAuth.js SessionProvider
-import '../styles/globals.css';
+import '../styles/globals.css'
 import { SessionProvider } from 'next-auth/react';
-import type { AppProps } from 'next/app';
+import { AppProps } from 'next/app';
+import { Provider } from 'react-redux';
+import store from '../redux/store';
 
-// Add type annotation for the MyApp function arguments
-function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <SessionProvider session={session}>
-      <Component {...pageProps} />
-    </SessionProvider>
+    <Provider store={store}>
+      <SessionProvider session={pageProps.session}>
+        <Component {...pageProps} />
+      </SessionProvider>
+    </Provider>
   );
 }
 
