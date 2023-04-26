@@ -1,6 +1,6 @@
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://eshop:BonerFart99@172.17.0.2:5432/eshop"
+  url      = "postgresql://eshop:BonerFart99@127.0.0.1:5432/eshop"
 }
 
 model Account {
